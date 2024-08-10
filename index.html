@@ -14,30 +14,55 @@
 				left: 0;
 				right: 0;
 				top: 0;
-				
 				height: 50px;
 				line-height: 50px;
 				z-index: 1000;
 			}
+
 			#nav .inner {
-			margin-left: 0; /* This creates the padding from the left */
-			max-width: 1000px;
-			display: flex;
-			justify-content: start; /* Align items to the start of the flex container */
+				margin-left: 0;
+				max-width: 1000px;
+				display: flex;
+				justify-content: space-between; /* Adjusted for responsive hamburger menu */
+				align-items: center;
+				padding: 0 15px; /* Add padding for better spacing */
 			}
-			#nav ul {
+
+			.menu-icon {
+				font-size: 30px;
+				cursor: pointer;
+				display: none; /* Hide by default */
+			}
+
+			#menu {
 				list-style: none;
 				padding: 0;
 				margin: 0;
 				display: flex;
 				gap: 25px;
 			}
+
+
+			#nav ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-wrap: wrap; /* Ensures the menu items can wrap to the next line on smaller screens */
+    			gap: 10px; /* Reduced gap to better fit smaller screens */
+				justify-content: center; /* Centers the menu items */
+    			width: 100%; /* Ensures the ul takes full width of the container */
+			}
 			#nav ul li {
 				display: inline;
+				flex: 1 1 auto; /* Allows the items to grow and shrink based on the screen size */
+    			text-align: center; /* Centers the text within each menu item */
 			}
 			#nav ul li a {
 				color: rgb(13, 13, 13);
 				text-decoration: none;
+				padding: 5px 15px; /* Increased padding for better touch area */
+    			font-size: 16px; /* Adjust font size for readability on mobile */
 			}
 			#nav ul li a:hover {
 				text-decoration: underline;
@@ -46,12 +71,55 @@
 			body {
 				padding-top: 60px; /* This should be equal or greater than the height of your navbar */
 			}
+			/* Responsive behavior */
+		@media (max-width: 768px) {
+			.menu-icon {
+				display: block; /* Show the menu icon on smaller screens */
+			}
+
+			#menu {
+				display: none; /* Hide menu by default on smaller screens */
+				flex-direction: column;
+				position: fixed; /* Keep the menu fixed at the top */
+				top: 50px;
+				left: 0;
+				right: 0;
+				background-color: #c4c0bbfe;
+				z-index: 1000;
+				max-height: 0;
+				overflow: hidden;
+				transition: max-height 0.3s ease-out; /* Smooth transition for the menu */
+			}
+
+			#menu.show {
+				max-height: 500px; /* Set a max height when the menu is expanded */
+				overflow-y: auto; /* Allow scrolling if the content exceeds the max height */
+			}
+
+			#menu li {
+				width: 100%;
+				text-align: center;
+				padding: 10px 0;
+				border-top: 1px solid #ccc;
+			}
+
+			#menu li a {
+				padding-left: 10px;
+				width: 100%;
+				display: block;
+			}
+		}	
+		/* Ensure content starts below the nav bar */
+		body {
+			padding-top: 60px; /* This should be equal or greater than the height of your navbar */
+		}
 		</style>
 	</head>
 	<body class="is-preload">
 		<nav id="nav">
 			<div class="inner">
-				<ul>
+				<div class="menu-icon" onclick="toggleMenu()">&#9776;</div> <!-- Hamburger icon -->
+				<ul id="menu" class="menu">
 					<li><a href="#education">Education</a></li>
 					<li><a href="#skills">Skills</a></li>
 					<li><a href="#experience">Experience</a></li>
@@ -59,7 +127,6 @@
 					<li><a href="#Research and Patent">Research and Patent</a></li>
 					<li><a href="#leadership and achievements">Leadership and Achievements</a></li>
 					<li><a href="#contact">Contact</a></li>
-					<!-- Add other sections as needed -->
 				</ul>
 			</div>
 		</nav>
@@ -707,6 +774,16 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			</footer>
 
 		<!-- Scripts -->
+		<script>
+			function toggleMenu() {
+				var menu = document.getElementById("menu");
+				if (menu.classList.contains("show")) {
+					menu.classList.remove("show");
+				} else {
+					menu.classList.add("show");
+				}
+			}
+			</script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.poptrox.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
